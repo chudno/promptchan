@@ -6,9 +6,9 @@ namespace Chudno\Promptchan\Enums;
 
 enum ImageSize: string
 {
-    CASE S512x512 = '512x512';
-    CASE S512x768 = '512x768';
-    CASE S768x512 = '768x512';
+    case S512x512 = '512x512';
+    case S512x768 = '512x768';
+    case S768x512 = '768x512';
 
     public function getLabel(): string
     {

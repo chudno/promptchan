@@ -19,8 +19,15 @@ final class ChatService implements ChatServiceInterface
 
     public function sendMessage(ChatRequest $request): ChatResponse
     {
-        $responseData = $this->apiClient->post('api/external/chat', $request->toArray());
+        try {
+            $this->logger->info('Sending chat message', ['request' => $request->toArray()]);
+            $responseData = $this->apiClient->post('api/external/chat', $request->toArray());
+            $this->logger->info('Chat message sent successfully');
 
-        return ChatResponse::fromArray($responseData);
+            return ChatResponse::fromArray($responseData);
+        } catch (\Throwable $e) {
+            $this->logger->error('Error sending chat message', ['exception' => $e->getMessage()]);
+            throw $e;
+        }
     }
 }

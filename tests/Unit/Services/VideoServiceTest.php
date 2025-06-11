@@ -19,8 +19,8 @@ use Psr\Log\LoggerInterface;
 
 final class VideoServiceTest extends TestCase
 {
-    private ApiClientInterface $apiClientMock;
-    private LoggerInterface $loggerMock;
+    private ApiClientInterface&\PHPUnit\Framework\MockObject\MockObject $apiClientMock;
+    private LoggerInterface&\PHPUnit\Framework\MockObject\MockObject $loggerMock;
     private VideoService $videoService;
 
     protected function setUp(): void

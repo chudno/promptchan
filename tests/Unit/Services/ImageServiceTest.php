@@ -13,13 +13,12 @@ use Chudno\Promptchan\Enums\ImageQuality;
 use Chudno\Promptchan\Services\ImageService;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
 
 final class ImageServiceTest extends TestCase
 {
-    private ApiClientInterface $apiClientMock;
+    private ApiClientInterface&\PHPUnit\Framework\MockObject\MockObject $apiClientMock;
     private ImageService $imageService;
-    private LoggerInterface $loggerMock;
+    private LoggerInterface&\PHPUnit\Framework\MockObject\MockObject $loggerMock;
 
     protected function setUp(): void
     {
