@@ -1,0 +1,69 @@
+{
+    "name": "chudno/promptchan",
+    "description": "Modern PHP SDK for Promptchan API - AI image generation, chat, and video creation",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["promptchan", "ai", "image-generation", "chat", "video", "sdk", "api"],
+    "authors": [
+        {
+            "name": "Konstantin Cudin",
+            "email": "konstantin@example.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "php-http/discovery": "^1.19",
+        "psr/log": "^3.0",
+        "psr/http-client": "^1.0",
+        "psr/http-factory": "^1.0",
+        "psr/http-message": "^1.0|^2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0",
+        "phpstan/phpstan": "^1.10",
+        "rector/rector": "^0.18",
+        "friendsofphp/php-cs-fixer": "^3.0",
+        "phpstan/phpstan-strict-rules": "^1.5",
+        "phpstan/extension-installer": "^1.3",
+        "guzzlehttp/guzzle": "^7.0",
+        "guzzlehttp/psr7": "^2.0"
+    },
+    "suggest": {
+        "guzzlehttp/guzzle": "For HTTP client implementation with Guzzle",
+        "symfony/http-client": "For HTTP client implementation with Symfony",
+        "react/http": "For HTTP client implementation with ReactPHP"
+    },
+    "autoload": {
+        "psr-4": {
+            "Chudno\\Promptchan\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Chudno\\Promptchan\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "test-coverage": "phpunit --coverage-html coverage",
+        "phpstan": "phpstan analyse",
+        "cs-fix": "bash -c 'PHP_CS_FIXER_IGNORE_ENV=1 php-cs-fixer fix'",
+        "cs-check": "bash -c 'PHP_CS_FIXER_IGNORE_ENV=1 php-cs-fixer fix --dry-run --diff'",
+        "rector": "rector process",
+        "rector-dry": "rector process --dry-run",
+        "quality": [
+            "@cs-check",
+            "@phpstan",
+            "@test"
+        ]
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "php-http/discovery": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
