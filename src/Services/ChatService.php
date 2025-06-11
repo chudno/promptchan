@@ -12,7 +12,8 @@ use Chudno\Promptchan\DataTransferObjects\ChatResponse;
 final class ChatService implements ChatServiceInterface
 {
     public function __construct(
-        private readonly ApiClientInterface $apiClient
+        private readonly ApiClientInterface $apiClient,
+        private readonly \Psr\Log\LoggerInterface $logger
     ) {
     }
 

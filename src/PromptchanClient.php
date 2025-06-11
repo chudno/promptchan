@@ -51,9 +51,9 @@ final class PromptchanClient
         $this->apiClient = new ApiClient($psrHttpClient, $baseUri, $apiKey);
 
         // Initialize services
-        $this->imageService = new ImageService($this->apiClient);
-        $this->chatService = new ChatService($this->apiClient);
-        $this->videoService = new VideoService($this->apiClient);
+        $this->imageService = new ImageService($this->apiClient, $logger);
+        $this->chatService = new ChatService($this->apiClient, $logger);
+        $this->videoService = new VideoService($this->apiClient, $logger);
     }
 
     public function images(): ImageServiceInterface

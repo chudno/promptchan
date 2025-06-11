@@ -89,14 +89,13 @@ final readonly class CreateImageRequest
 
     private function validateSliders(): void
     {
-        $sliders = [
-            'ageSlider' => $this->ageSlider,
+        $normalizedSliders = [
             'weightSlider' => $this->weightSlider,
             'breastSlider' => $this->breastSlider,
             'assSlider' => $this->assSlider,
         ];
 
-        foreach ($sliders as $name => $value) {
+        foreach ($normalizedSliders as $name => $value) {
             if ($value < 0.0 || $value > 1.0) {
                 throw new \InvalidArgumentException(
                     sprintf('%s must be between 0.0 and 1.0, got %f', $name, $value)
@@ -104,8 +103,10 @@ final readonly class CreateImageRequest
             }
         }
 
-        if ($this->ageSlider < 18.0) {
-            throw new \InvalidArgumentException('Age slider must be at least 18.0');
+        if ($this->ageSlider < 18.0 || $this->ageSlider > 100.0) { // Assuming a reasonable upper limit for age
+            throw new \InvalidArgumentException(
+                sprintf('ageSlider must be between 18.0 and 100.0, got %f', $this->ageSlider)
+            );
         }
     }
 

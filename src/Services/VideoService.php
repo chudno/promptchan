@@ -14,28 +14,53 @@ use Chudno\Promptchan\DataTransferObjects\VideoResultResponse;
 final class VideoService implements VideoServiceInterface
 {
     public function __construct(
-        private readonly ApiClientInterface $apiClient
+        private readonly ApiClientInterface $apiClient,
+        private readonly \Psr\Log\LoggerInterface $logger
     ) {
     }
 
     public function submit(VideoSubmitRequest $request): VideoSubmitResponse
     {
-        $responseData = $this->apiClient->post('api/external/video_v2/submit', $request->toArray());
+        try {
+            $responseData = $this->apiClient->post('api/external/video_v2/submit', $request->toArray());
 
-        return VideoSubmitResponse::fromArray($responseData);
+            return VideoSubmitResponse::fromArray($responseData);
+        } catch (\Chudno\Promptchan\Exceptions\ApiException $e) {
+            $this->logger->error(
+                'API Error during video submission',
+                ['exception' => $e, 'request_data' => $request->toArray()]
+            );
+            throw $e;
+        }
     }
 
     public function getStatus(string $requestId): VideoStatusResponse
     {
-        $responseData = $this->apiClient->get("api/external/video_v2/status/{$requestId}");
+        try {
+            $responseData = $this->apiClient->get("api/external/video_v2/status/{$requestId}");
 
-        return VideoStatusResponse::fromArray($responseData);
+            return VideoStatusResponse::fromArray($responseData);
+        } catch (\Chudno\Promptchan\Exceptions\ApiException $e) {
+            $this->logger->error(
+                'API Error during video status retrieval',
+                ['exception' => $e, 'request_id' => $requestId]
+            );
+            throw $e;
+        }
     }
 
     public function getResult(string $requestId): VideoResultResponse
     {
-        $responseData = $this->apiClient->get("api/external/video_v2/result/{$requestId}");
+        try {
+            $responseData = $this->apiClient->get("api/external/video_v2/result/{$requestId}");
 
-        return VideoResultResponse::fromArray($responseData);
+            return VideoResultResponse::fromArray($responseData);
+        } catch (\Chudno\Promptchan\Exceptions\ApiException $e) {
+            $this->logger->error(
+                'API Error during video result retrieval',
+                ['exception' => $e, 'request_id' => $requestId]
+            );
+            throw $e;
+        }
     }
 }
