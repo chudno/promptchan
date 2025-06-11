@@ -20,8 +20,8 @@ Thumbs.db
 
 # Coverage
 coverage/
+coverage.xml
 
 # PHPUnit
 .phpunit.result.cache
 .phpunit.cache
-/phpunit.xml
