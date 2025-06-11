@@ -1,5 +1,5 @@
 test:
-	composer phpunit
+	composer test
 
 quality:
 	composer quality
@@ -14,7 +14,7 @@ cs-check:
 	composer cs-check
 
 rector:
-	rector process
+	composer rector
 
 rector-dry:
 	composer rector-dry

@@ -11,6 +11,7 @@ use Chudno\Promptchan\PromptchanClient;
 use Chudno\Promptchan\DataTransferObjects\CreateImageRequest;
 use Chudno\Promptchan\Enums\ImageStyle;
 use Chudno\Promptchan\Enums\ImageQuality;
+use Chudno\Promptchan\Enums\ImageSize; // Added ImageSize enum
 
 // Initialize the client
 $client = new PromptchanClient('your-api-key-here');
@@ -19,7 +20,8 @@ $client = new PromptchanClient('your-api-key-here');
 $request = new CreateImageRequest(
     prompt: 'Beautiful woman with long hair in a garden',
     style: ImageStyle::XL_REALISTIC,
-    quality: ImageQuality::ULTRA
+    quality: ImageQuality::ULTRA,
+    imageSize: ImageSize::S512x512 // Added ImageSize example
 );
 
 // Generate the image
@@ -45,7 +47,7 @@ $request = new CreateImageRequest(
     negativePrompt: 'blurry, low quality, distorted',
     seed: 12345,
     creativity: 0.8,
-    imageSize: '768x768',
+    imageSize: ImageSize::S512x512, // Changed to ImageSize enum, example uses S512x512, can be S768x512 or S512x768
     faceRestoration: true
 );
 
@@ -109,11 +111,24 @@ ImageQuality::ULTRA         // Ultra quality (best)
 
 ## Image Sizes
 
-Supported image sizes:
-- `'512x512'` - Square format
-- `'768x768'` - Larger square
-- `'512x768'` - Portrait
-- `'768x512'` - Landscape
+Use the `ImageSize` enum to specify dimensions:
+
+```php
+use Chudno\Promptchan\Enums\ImageSize;
+
+// Available sizes:
+ImageSize::S512x512  // 512x512 pixels
+ImageSize::S512x768  // 512x768 pixels
+ImageSize::S768x512  // 768x512 pixels
+```
+
+**Example:**
+```php
+$request = new CreateImageRequest(
+    prompt: 'A beautiful landscape',
+    imageSize: ImageSize::S768x512 // Landscape format
+);
+```
 
 ## Error Handling
 

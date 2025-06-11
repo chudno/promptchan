@@ -6,6 +6,7 @@ namespace Chudno\Promptchan\DataTransferObjects;
 
 use Chudno\Promptchan\Enums\ImagePose;
 use Chudno\Promptchan\Enums\ImageQuality;
+use Chudno\Promptchan\Enums\ImageSize; // Added ImageSize enum
 use Chudno\Promptchan\Enums\ImageStyle;
 
 final readonly class CreateImageRequest
@@ -21,7 +22,7 @@ final readonly class CreateImageRequest
         public ?int $seed = null,
         public ImageQuality $quality = ImageQuality::ULTRA,
         public float $creativity = 0.5,
-        public string $imageSize = '512x512',
+        public ImageSize $imageSize = ImageSize::S512x512, // Changed to ImageSize enum
         public bool $faceRestoration = false,
         public float $ageSlider = 25.0,
         public float $weightSlider = 0.5,
@@ -43,7 +44,7 @@ final readonly class CreateImageRequest
             'style' => $this->style->value,
             'quality' => $this->quality->value,
             'creativity' => $this->creativity,
-            'image_size' => $this->imageSize,
+            'image_size' => $this->imageSize->value, // Changed to use enum value
             'face_restoration' => $this->faceRestoration,
             'age_slider' => $this->ageSlider,
             'weight_slider' => $this->weightSlider,
@@ -80,12 +81,10 @@ final readonly class CreateImageRequest
 
     private function validateImageSize(): void
     {
-        $allowedSizes = ['512x512', '512x768', '768x512'];
-        if (!in_array($this->imageSize, $allowedSizes, true)) {
-            throw new \InvalidArgumentException(
-                sprintf('Invalid image size. Allowed sizes: %s', implode(', ', $allowedSizes))
-            );
-        }
+        // Validation is now handled by the enum type hint
+        // We can keep this method for potential future complex validation logic if needed
+        // or remove it if it's no longer necessary.
+        // For now, let's keep it empty as the enum handles basic validation.
     }
 
     private function validateSliders(): void

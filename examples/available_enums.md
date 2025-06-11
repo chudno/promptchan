@@ -4,6 +4,30 @@ This document describes all available enums in the Promptchan SDK and their usag
 
 ## Image Enums
 
+### ImageSize
+
+Defines the dimensions for image generation:
+
+```php
+use Chudno\Promptchan\Enums\ImageSize;
+
+// Available sizes:
+ImageSize::S512x512  // 512x512 pixels
+ImageSize::S512x768  // 512x768 pixels
+ImageSize::S768x512  // 768x512 pixels
+```
+
+**Usage Example:**
+```php
+use Chudno\Promptchan\DataTransferObjects\CreateImageRequest;
+use Chudno\Promptchan\Enums\ImageSize;
+
+$request = new CreateImageRequest(
+    prompt: 'A cute cat',
+    imageSize: ImageSize::S512x512 // Use 512x512 size
+);
+```
+
 ### ImageStyle
 
 Defines the artistic style for image generation:
@@ -179,6 +203,7 @@ use Chudno\Promptchan\Enums\{
     ImageStyle,
     ImageQuality,
     ImagePose,
+    ImageSize, // Added ImageSize
     VideoQuality,
     VideoAspect,
     VideoStatus
@@ -191,7 +216,8 @@ $imageRequest = new CreateImageRequest(
     prompt: 'Beautiful anime character in magical forest',
     style: ImageStyle::XL_STYLISED_ANIME_XL,
     pose: ImagePose::STANDING,
-    quality: ImageQuality::EXTREME
+    quality: ImageQuality::EXTREME,
+    imageSize: ImageSize::S512x512 // Added ImageSize example
 );
 
 $imageResponse = $client->image()->create($imageRequest);
