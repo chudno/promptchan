@@ -13,14 +13,14 @@ A modern, framework-agnostic PHP SDK for the Promptchan API. Generate AI images,
 - 🎨 **AI Image Generation** - Create images with various styles, poses, and filters
 - 💬 **AI Chat** - Interactive conversations with AI companions
 - 🎬 **Video Generation** - Asynchronous video creation with status tracking
-- 🔒 **Type Safety** - Full PHP 8.1+ type declarations with enums
+- 🔒 **Type Safety** - Full PHP 8.2+ type declarations with enums
 - 📝 **PSR-3 Logging** - Built-in request/response logging support
 - 🧪 **Fully Tested** - Comprehensive test suite with >90% coverage
 - 🏗️ **Modern Architecture** - Clean, SOLID principles with dependency injection
 
 ## Requirements
 
-- PHP 8.1 or higher
+- PHP 8.2 or higher
 - Any PSR-18 HTTP client (Guzzle, Symfony HttpClient, etc.)
 - Valid Promptchan API key
 

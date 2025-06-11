@@ -6,7 +6,7 @@ This guide covers development workflows, testing, and code quality tools for the
 
 ### Prerequisites
 
-- PHP 8.1 or higher
+- PHP 8.2 or higher
 - Composer
 - Git
 
@@ -233,7 +233,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-version: [8.1, 8.2, 8.3]
+        php-version: [8.2, 8.3, 8.4]
     
     steps:
     - uses: actions/checkout@v3
