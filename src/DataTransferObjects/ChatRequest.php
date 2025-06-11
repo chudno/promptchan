@@ -20,6 +20,9 @@ final readonly class ChatRequest
         $this->validateChatHistory();
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
         $data = [
@@ -34,7 +37,7 @@ final readonly class ChatRequest
 
         if ($this->chatHistory !== []) {
             $data['chatHistory'] = array_map(
-                static fn(ChatMessage $message): array => $message->toArray(),
+                static fn (ChatMessage $message): array => $message->toArray(),
                 $this->chatHistory
             );
         }
@@ -76,6 +79,9 @@ final readonly class ChatRequest
         );
     }
 
+    /**
+     * @param array<ChatMessage> $chatHistory
+     */
     public function withChatHistory(array $chatHistory): self
     {
         return new self(

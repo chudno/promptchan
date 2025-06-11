@@ -20,6 +20,9 @@ final readonly class VideoSubmitRequest
         $this->validateAgeSlider();
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
         $data = [
@@ -122,7 +125,7 @@ final readonly class VideoSubmitRequest
     {
         $baseCost = $this->quality->getGemsCost();
         $audioCost = $this->audioEnabled ? 2 : 0;
-        
+
         return $baseCost + $audioCost;
     }
 }

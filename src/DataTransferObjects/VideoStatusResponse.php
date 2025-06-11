@@ -15,8 +15,12 @@ final readonly class VideoStatusResponse
         public ?int $progress = null,
         public ?\DateTimeInterface $createdAt = null,
         public ?\DateTimeInterface $updatedAt = null,
-    ) {}
+    ) {
+    }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public static function fromArray(array $data): self
     {
         $status = VideoStatus::from(
@@ -43,6 +47,9 @@ final readonly class VideoStatusResponse
         );
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
         $data = [
@@ -57,8 +64,6 @@ final readonly class VideoStatusResponse
         if ($this->progress !== null) {
             $data['progress'] = $this->progress;
         }
-
-
 
         if ($this->createdAt !== null) {
             $data['created_at'] = $this->createdAt->format('c');
@@ -100,8 +105,6 @@ final readonly class VideoStatusResponse
     {
         return $this->progress ?? $this->status->getProgressPercentage();
     }
-
-
 
     public function getElapsedTime(): ?\DateInterval
     {

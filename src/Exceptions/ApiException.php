@@ -6,6 +6,9 @@ namespace Chudno\Promptchan\Exceptions;
 
 class ApiException extends \Exception
 {
+    /**
+     * @param array<string, mixed> $responseData
+     */
     public function __construct(
         string $message = '',
         private readonly int $statusCode = 0,
@@ -20,6 +23,9 @@ class ApiException extends \Exception
         return $this->statusCode;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getResponseData(): array
     {
         return $this->responseData;
@@ -40,6 +46,9 @@ class ApiException extends \Exception
         return $this->responseData['error_message'] ?? $this->responseData['message'] ?? null;
     }
 
+    /**
+     * @return array<string, mixed>|null
+     */
     public function getErrorDetails(): ?array
     {
         return $this->responseData['details'] ?? null;

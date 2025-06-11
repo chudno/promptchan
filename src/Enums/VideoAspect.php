@@ -22,6 +22,9 @@ enum VideoAspect: string
         };
     }
 
+    /**
+     * @return array{width: int, height: int}
+     */
     public function getDimensions(): array
     {
         return match ($this) {

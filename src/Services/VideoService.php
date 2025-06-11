@@ -15,7 +15,8 @@ final class VideoService implements VideoServiceInterface
 {
     public function __construct(
         private readonly ApiClientInterface $apiClient
-    ) {}
+    ) {
+    }
 
     public function submit(VideoSubmitRequest $request): VideoSubmitResponse
     {

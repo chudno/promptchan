@@ -14,6 +14,9 @@ final readonly class ChatMessage
         $this->validateRole();
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
         $data = [
@@ -28,6 +31,9 @@ final readonly class ChatMessage
         return $data;
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public static function fromArray(array $data): self
     {
         $sendDate = null;

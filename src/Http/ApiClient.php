@@ -13,37 +13,60 @@ final class ApiClient implements ApiClientInterface
         private readonly HttpClientInterface $httpClient,
         private readonly string $baseUri,
         private readonly string $apiKey = ''
-    ) {}
+    ) {
+    }
 
+    /**
+     * @param array<string, mixed> $headers
+     *
+     * @return array<string, mixed>
+     */
     public function get(string $endpoint, array $headers = []): array
     {
         $url = $this->buildUrl($endpoint);
         $headers = $this->addAuthHeaders($headers);
-        
+
         return $this->httpClient->get($url, $headers);
     }
 
+    /**
+     * @param array<string, mixed> $data
+     * @param array<string, mixed> $headers
+     *
+     * @return array<string, mixed>
+     */
     public function post(string $endpoint, array $data = [], array $headers = []): array
     {
         $url = $this->buildUrl($endpoint);
         $headers = $this->addAuthHeaders($headers);
-        
+
         return $this->httpClient->post($url, $data, $headers);
     }
 
+    /**
+     * @param array<string, mixed> $data
+     * @param array<string, mixed> $headers
+     *
+     * @return array<string, mixed>
+     */
     public function put(string $endpoint, array $data = [], array $headers = []): array
     {
         $url = $this->buildUrl($endpoint);
         $headers = $this->addAuthHeaders($headers);
-        
+
         return $this->httpClient->put($url, $data, $headers);
     }
 
+    /**
+     * @param array<string, mixed> $headers
+     *
+     * @return array<string, mixed>
+     */
     public function delete(string $endpoint, array $headers = []): array
     {
         $url = $this->buildUrl($endpoint);
         $headers = $this->addAuthHeaders($headers);
-        
+
         return $this->httpClient->delete($url, $headers);
     }
 
@@ -52,6 +75,9 @@ final class ApiClient implements ApiClientInterface
         return $this->httpClient->getLastStatusCode();
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getLastHeaders(): array
     {
         return $this->httpClient->getLastHeaders();
@@ -61,16 +87,21 @@ final class ApiClient implements ApiClientInterface
     {
         $baseUri = rtrim($this->baseUri, '/');
         $endpoint = ltrim($endpoint, '/');
-        
+
         return $baseUri . '/' . $endpoint;
     }
 
+    /**
+     * @param array<string, mixed> $headers
+     *
+     * @return array<string, mixed>
+     */
     private function addAuthHeaders(array $headers): array
     {
         if ($this->apiKey !== '') {
             $headers['Authorization'] = 'Bearer ' . $this->apiKey;
         }
-        
+
         return $headers;
     }
 }

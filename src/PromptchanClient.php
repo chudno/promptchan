@@ -38,15 +38,15 @@ final class PromptchanClient
         string $baseUri = 'https://api.promptchan.ai'
     ) {
         // Use provided dependencies or auto-discover
-        $httpClient = $httpClient ?? Psr18ClientDiscovery::find();
-        $requestFactory = $requestFactory ?? Psr17FactoryDiscovery::findRequestFactory();
-        $streamFactory = $streamFactory ?? Psr17FactoryDiscovery::findStreamFactory();
-        $logger = $logger ?? new NullLogger();
+        $httpClient ??= Psr18ClientDiscovery::find();
+        $requestFactory ??= Psr17FactoryDiscovery::findRequestFactory();
+        $streamFactory ??= Psr17FactoryDiscovery::findStreamFactory();
+        $logger ??= new NullLogger();
 
         // Create transport and HTTP client
         $transport = new PsrTransport($httpClient);
         $psrHttpClient = new PsrHttpClient($transport, $requestFactory, $streamFactory, $logger);
-        
+
         // Create API client with configuration
         $this->apiClient = new ApiClient($psrHttpClient, $baseUri, $apiKey);
 
@@ -76,6 +76,9 @@ final class PromptchanClient
         return $this->apiClient->getLastStatusCode();
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getLastHeaders(): array
     {
         return $this->apiClient->getLastHeaders();

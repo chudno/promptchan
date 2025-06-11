@@ -13,7 +13,8 @@ final class ImageService implements ImageServiceInterface
 {
     public function __construct(
         private readonly ApiClientInterface $apiClient
-    ) {}
+    ) {
+    }
 
     public function create(CreateImageRequest $request): CreateImageResponse
     {

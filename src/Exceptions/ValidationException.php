@@ -52,12 +52,14 @@ final class ValidationException extends ApiException
         foreach ($this->errors as $fieldErrors) {
             $messages = array_merge($messages, $fieldErrors);
         }
+
         return $messages;
     }
 
     public function getFirstErrorMessage(): ?string
     {
         $allMessages = $this->getAllErrorMessages();
+
         return $allMessages === [] ? null : $allMessages[0];
     }
 

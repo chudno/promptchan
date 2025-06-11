@@ -10,10 +10,12 @@ use Psr\Http\Message\ResponseInterface;
 interface TransportInterface
 {
     /**
-     * Send HTTP request and return response
+     * Send HTTP request and return response.
      *
      * @param RequestInterface $request
+     *
      * @return ResponseInterface
+     *
      * @throws \Chudno\Promptchan\Exceptions\ApiException
      */
     public function sendRequest(RequestInterface $request): ResponseInterface;

@@ -14,7 +14,8 @@ final readonly class PsrTransport implements TransportInterface
 {
     public function __construct(
         private ClientInterface $httpClient
-    ) {}
+    ) {
+    }
 
     public function sendRequest(RequestInterface $request): ResponseInterface
     {

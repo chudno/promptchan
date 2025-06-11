@@ -9,8 +9,12 @@ final readonly class VideoSubmitResponse
     public function __construct(
         public string $requestId,
         public string $message = 'Video generation request submitted successfully',
-    ) {}
+    ) {
+    }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public static function fromArray(array $data): self
     {
         return new self(
@@ -19,6 +23,9 @@ final readonly class VideoSubmitResponse
         );
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
         return [

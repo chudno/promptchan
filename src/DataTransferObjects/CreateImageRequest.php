@@ -33,6 +33,9 @@ final readonly class CreateImageRequest
         $this->validateCreativity();
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
         $data = [

@@ -18,12 +18,15 @@ final readonly class ChatResponse
         $this->validateChatHistory();
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public static function fromArray(array $data): self
     {
         $chatHistory = [];
         if (isset($data['chatHistory']) && is_array($data['chatHistory'])) {
             $chatHistory = array_map(
-                static fn(array $messageData): ChatMessage => ChatMessage::fromArray($messageData),
+                static fn (array $messageData): ChatMessage => ChatMessage::fromArray($messageData),
                 $data['chatHistory']
             );
         }
@@ -36,12 +39,15 @@ final readonly class ChatResponse
         );
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
         $data = [
             'message' => $this->message,
             'chatHistory' => array_map(
-                static fn(ChatMessage $message): array => $message->toArray(),
+                static fn (ChatMessage $message): array => $message->toArray(),
                 $this->chatHistory
             ),
         ];
@@ -71,7 +77,7 @@ final readonly class ChatResponse
     {
         $userMessages = array_filter(
             $this->chatHistory,
-            static fn(ChatMessage $message): bool => $message->isUser()
+            static fn (ChatMessage $message): bool => $message->isUser()
         );
 
         return $userMessages === [] ? null : end($userMessages);
@@ -81,7 +87,7 @@ final readonly class ChatResponse
     {
         $assistantMessages = array_filter(
             $this->chatHistory,
-            static fn(ChatMessage $message): bool => $message->isAssistant()
+            static fn (ChatMessage $message): bool => $message->isAssistant()
         );
 
         return $assistantMessages === [] ? null : end($assistantMessages);
@@ -99,13 +105,13 @@ final readonly class ChatResponse
         }
 
         $audioData = base64_decode($this->audio, true);
-        
+
         if ($audioData === false) {
             throw new \InvalidArgumentException('Invalid base64 audio data');
         }
 
         $directory = dirname($filePath);
-        if (!is_dir($directory) && !mkdir($directory, 0755, true) && !is_dir($directory)) {
+        if (!is_dir($directory) && !mkdir($directory, 0o755, true) && !is_dir($directory)) {
             throw new \RuntimeException(sprintf('Directory "%s" was not created', $directory));
         }
 
@@ -119,13 +125,13 @@ final readonly class ChatResponse
         }
 
         $imageData = base64_decode($this->selfie, true);
-        
+
         if ($imageData === false) {
             throw new \InvalidArgumentException('Invalid base64 selfie data');
         }
 
         $directory = dirname($filePath);
-        if (!is_dir($directory) && !mkdir($directory, 0755, true) && !is_dir($directory)) {
+        if (!is_dir($directory) && !mkdir($directory, 0o755, true) && !is_dir($directory)) {
             throw new \RuntimeException(sprintf('Directory "%s" was not created', $directory));
         }
 

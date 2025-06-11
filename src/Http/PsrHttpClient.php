@@ -16,10 +16,13 @@ use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
-
 final class PsrHttpClient implements HttpClientInterface
 {
     private ?int $lastStatusCode = null;
+
+    /**
+     * @var array<string, array<string>>
+     */
     private array $lastHeaders = [];
 
     public function __construct(
@@ -27,44 +30,74 @@ final class PsrHttpClient implements HttpClientInterface
         private readonly RequestFactoryInterface $requestFactory,
         private readonly StreamFactoryInterface $streamFactory,
         private readonly LoggerInterface $logger = new NullLogger()
-    ) {}
+    ) {
+    }
 
+    /**
+     * @param array<string, mixed> $headers
+     *
+     * @return array<string, mixed>
+     */
     public function get(string $url, array $headers = []): array
     {
         return $this->makeRequest('GET', $url, null, $headers);
     }
 
+    /**
+     * @param array<string, mixed> $data
+     * @param array<string, mixed> $headers
+     *
+     * @return array<string, mixed>
+     */
     public function post(string $url, array $data = [], array $headers = []): array
     {
         return $this->makeRequest('POST', $url, $data, $headers);
     }
 
+    /**
+     * @param array<string, mixed> $data
+     * @param array<string, mixed> $headers
+     *
+     * @return array<string, mixed>
+     */
     public function put(string $url, array $data = [], array $headers = []): array
     {
         return $this->makeRequest('PUT', $url, $data, $headers);
     }
 
+    /**
+     * @param array<string, mixed> $headers
+     *
+     * @return array<string, mixed>
+     */
     public function delete(string $url, array $headers = []): array
     {
         return $this->makeRequest('DELETE', $url, null, $headers);
     }
-
-
 
     public function getLastStatusCode(): ?int
     {
         return $this->lastStatusCode;
     }
 
+    /**
+     * @return array<string, array<string>>
+     */
     public function getLastHeaders(): array
     {
         return $this->lastHeaders;
     }
 
+    /**
+     * @param array<string, mixed>|null $data
+     * @param array<string, mixed>      $headers
+     *
+     * @return array<string, mixed>
+     */
     private function makeRequest(string $method, string $url, ?array $data = null, array $headers = []): array
     {
         $request = $this->buildRequest($method, $url, $data, $headers);
-        
+
         // Log request
         $this->logger->info('Sending HTTP request', [
             'type' => LogType::SEND_REQUEST->value,
@@ -73,9 +106,9 @@ final class PsrHttpClient implements HttpClientInterface
             'headers' => $headers,
             'data' => $data,
         ]);
-        
+
         $response = $this->transport->sendRequest($request);
-        
+
         $this->lastStatusCode = $response->getStatusCode();
         $this->lastHeaders = $response->getHeaders();
 
@@ -97,6 +130,10 @@ final class PsrHttpClient implements HttpClientInterface
         return $responseData;
     }
 
+    /**
+     * @param array<string, mixed>|null $data
+     * @param array<string, mixed>      $headers
+     */
     private function buildRequest(string $method, string $url, ?array $data, array $headers): RequestInterface
     {
         $defaultHeaders = [
@@ -120,6 +157,9 @@ final class PsrHttpClient implements HttpClientInterface
         return $request;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function parseJsonResponse(ResponseInterface $response): array
     {
         $content = $response->getBody()->getContents();
@@ -138,7 +178,7 @@ final class PsrHttpClient implements HttpClientInterface
                 'raw_response' => $content,
                 'status_code' => $response->getStatusCode(),
             ]);
-            
+
             throw new ApiException(
                 'Invalid JSON response: ' . $e->getMessage(),
                 $response->getStatusCode(),
@@ -147,6 +187,9 @@ final class PsrHttpClient implements HttpClientInterface
         }
     }
 
+    /**
+     * @param array<string, mixed> $responseData
+     */
     private function handleHttpError(ResponseInterface $response, array $responseData): never
     {
         $statusCode = $response->getStatusCode();
@@ -166,6 +209,4 @@ final class PsrHttpClient implements HttpClientInterface
 
         throw new ApiException($message, $statusCode, $responseData);
     }
-
-
 }

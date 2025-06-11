@@ -20,8 +20,12 @@ final readonly class VideoResultResponse
         public ?string $message = null,
         public ?\DateTimeInterface $createdAt = null,
         public ?\DateTimeInterface $completedAt = null,
-    ) {}
+    ) {
+    }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public static function fromArray(array $data): self
     {
         $status = VideoStatus::from(
@@ -53,6 +57,9 @@ final readonly class VideoResultResponse
         );
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
         $data = [
@@ -143,7 +150,7 @@ final readonly class VideoResultResponse
 
         while ($size >= 1024 && $unitIndex < count($units) - 1) {
             $size /= 1024;
-            $unitIndex++;
+            ++$unitIndex;
         }
 
         return sprintf('%.2f %s', $size, $units[$unitIndex]);
@@ -167,6 +174,4 @@ final readonly class VideoResultResponse
 
         return $interval->s + ($interval->i * 60) + ($interval->h * 3600) + ($interval->d * 86400);
     }
-
-
 }

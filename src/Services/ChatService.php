@@ -13,7 +13,8 @@ final class ChatService implements ChatServiceInterface
 {
     public function __construct(
         private readonly ApiClientInterface $apiClient
-    ) {}
+    ) {
+    }
 
     public function sendMessage(ChatRequest $request): ChatResponse
     {
